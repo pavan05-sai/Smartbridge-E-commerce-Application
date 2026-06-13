@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0a0a0f;
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+/* Custom Webkit Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e3a5f;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Utilities */
+.text-gradient {
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-electric {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-glass {
+  background: rgba(13, 17, 23, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 58, 95, 0.4);
+}
+
+.card-glass-hover:hover {
+  border-color: rgba(96, 165, 250, 0.5);
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Grid & Particle Background Utility */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(30, 58, 95, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 58, 95, 0.05) 1px, transparent 1px);
+}
+
+/* Skeleton Loading Pulses */
+.skeleton-pulse {
+  background: linear-gradient(
+    90deg,
+    #111827 25%,
+    #1f2937 37%,
+    #111827 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.4s ease infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Button Press Effect */
+.btn-press {
+  transition: transform 0.1s ease-in-out;
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Custom Range Input Styling for Price Slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #1e3a5f;
+  height: 6px;
+  border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -5px; /* Centers thumb on the track */
+  background-color: #3b82f6;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  transition: background-color 0.1s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background-color: #60a5fa;
+}

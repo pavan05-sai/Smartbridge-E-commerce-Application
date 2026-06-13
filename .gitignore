@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+server/node_modules/
+client/node_modules/
+
+# Environment Variables (NEVER commit these)
+.env
+.env.local
+.env.production
+
+# Build output
+client/dist/
+client/build/
+
+# Logs
+npm-debug.log*
+nodemon-debug.log*
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Uploads (local only)
+server/uploads/*
+!server/uploads/.gitkeep
