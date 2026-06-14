@@ -1,6 +1,6 @@
 # ShopEZ E-Commerce Platform
 
-ShopEZ is a clean, full-featured online marketplace built using the MERN stack (MongoDB, Express, React, Node) styled with a modern, beginner-friendly **white and blue UI**.
+ShopEZ is a clean, full-featured online marketplace built using the MERN stack (MongoDB, Express, React, Node) 
 
 The platform supports two distinct user profiles: **Buyers** (who browse listings, review products, manage shopping carts, and check out securely) and **Sellers** (who access dashboard analytics, view monthly earning charts, manage order logs, and manage their listings catalog).
 
