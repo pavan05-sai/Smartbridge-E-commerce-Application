@@ -9,7 +9,7 @@ export default {
       colors: {
         background: {
           primary: '#ffffff', // plain white background
-          secondary: '#f1f5f9', // light gray background / card bg
+          secondary: #333333;  /* classic dark grey */
         },
         accent: {
           blue: '#2563eb', // primary blue color
