@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { motion } from 'framer-motion';
 import { ShoppingBag, Landmark, ArrowRight, ShieldCheck, Zap, Percent } from 'lucide-react';
 import { fetchProducts, setFilter } from '../redux/slices/productSlice';
 import ProductGrid from '../components/product/ProductGrid';
@@ -32,43 +31,23 @@ export default function Home() {
         
         {/* Left Side Hero Details (Asymmetric grid width) */}
         <div className="lg:col-span-7 space-y-6 text-left relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-borderBlue bg-surface/50 backdrop-blur-sm"
-          >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-borderBlue bg-surface/50 backdrop-blur-sm">
             <Zap size={13} className="text-accent-electric animate-pulse" />
             <span className="text-[10px] font-accent font-bold uppercase tracking-widest text-accent-electric">
               The Future of Shopping is Here
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] font-heading"
-          >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] font-heading">
             Shop Smarter.<br />
             <span className="text-gradient">Live Better.</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg text-text-secondary max-w-lg leading-relaxed"
-          >
+          <p className="text-base sm:text-lg text-text-secondary max-w-lg leading-relaxed">
             Explore a premium digital marketplace. Handcrafted layouts, lighting fast checkouts, and certified sellers. Experience the difference.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-4 pt-2"
-          >
+          <div className="flex flex-wrap gap-4 pt-2">
             <Link
               to="/products"
               className="flex items-center gap-2 px-6 py-3 bg-accent-blue hover:bg-accent-bright text-white font-medium rounded-lg text-sm transition-all hover:shadow-glow btn-press font-heading"
@@ -82,7 +61,7 @@ export default function Home() {
             >
               Sell on ShopEZ
             </Link>
-          </motion.div>
+          </div>
         </div>
 
         {/* Right Side: Rotated Mockup Cards (Asymmetric positioning) */}
@@ -91,12 +70,7 @@ export default function Home() {
           <div className="absolute w-[250px] h-[250px] rounded-full bg-accent-blue/15 blur-[80px]"></div>
 
           {/* Floating mockup 1 (Rotated -6 degrees) */}
-          <motion.div
-            initial={{ opacity: 0, x: 50, rotate: 0 }}
-            animate={{ opacity: 1, x: 0, rotate: -6 }}
-            transition={{ type: 'spring', stiffness: 60, delay: 0.3 }}
-            className="absolute left-6 top-12 w-56 card-glass border border-borderBlue/80 rounded-xl overflow-hidden p-3 shadow-2xl hover:scale-105 transition-transform duration-300"
-          >
+          <div className="absolute left-6 top-12 w-56 card-glass border border-borderBlue/80 rounded-xl overflow-hidden p-3 shadow-2xl -rotate-6 hover:scale-105 transition-transform duration-300">
             <div className="relative aspect-square rounded-lg overflow-hidden bg-surface">
               <img
                 src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80"
@@ -109,15 +83,10 @@ export default function Home() {
               <div className="text-sm font-semibold text-text-primary truncate">AeroSprint Runner</div>
               <div className="text-xs font-accent font-bold text-accent-electric">₹9,999.00</div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Floating mockup 2 (Rotated 8 degrees) */}
-          <motion.div
-            initial={{ opacity: 0, x: 80, rotate: 0 }}
-            animate={{ opacity: 1, x: 20, rotate: 8 }}
-            transition={{ type: 'spring', stiffness: 50, delay: 0.5 }}
-            className="absolute right-4 bottom-8 w-52 card-glass border border-borderBlue/60 rounded-xl overflow-hidden p-3 shadow-2xl hover:scale-105 transition-transform duration-300 z-10"
-          >
+          <div className="absolute right-4 bottom-8 w-52 card-glass border border-borderBlue/60 rounded-xl overflow-hidden p-3 shadow-2xl rotate-[8deg] hover:scale-105 transition-transform duration-300 z-10">
             <div className="relative aspect-square rounded-lg overflow-hidden bg-surface">
               <img
                 src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80"
@@ -130,7 +99,7 @@ export default function Home() {
               <div className="text-sm font-semibold text-text-primary truncate">Minimalist Timepiece</div>
               <div className="text-xs font-accent font-bold text-accent-electric">₹15,499.00</div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
       </section>
@@ -182,7 +151,7 @@ export default function Home() {
 
       {/* 4. Asymmetric Discount Banner */}
       <section className="max-w-7xl mx-auto px-6 py-12">
-        <div className="relative rounded-2xl overflow-hidden bg-[#0d1117] border border-borderBlue shadow-2xl p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 min-h-[240px]">
+        <div className="relative rounded-2xl overflow-hidden bg-background-secondary border border-borderBlue shadow-2xl p-8 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 min-h-[240px]">
           {/* Asymmetric Diagonal Stripe background */}
           <div className="absolute inset-y-0 right-0 left-1/3 bg-gradient-to-r from-transparent via-accent-blue/5 to-accent-blue/10 transform skew-x-12 pointer-events-none"></div>
 

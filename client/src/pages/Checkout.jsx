@@ -154,7 +154,7 @@ export default function Checkout() {
             <button
               type="submit"
               disabled={loading || items.length === 0}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-accent-blue to-accent-bright hover:shadow-glow text-white font-semibold rounded-lg text-sm transition-all btn-press disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-3.5 bg-accent-blue hover:bg-accent-bright hover:shadow-glow text-white font-semibold rounded-lg text-sm transition-all btn-press disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Lock size={15} />
               {loading ? 'Processing Order...' : 'Place Secure Order'}

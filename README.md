@@ -1,118 +1,159 @@
 # ShopEZ E-Commerce Platform
 
-ShopEZ is a full-featured online shopping marketplace built using the **MERN Stack** (MongoDB, Express, React, Node) with a custom **premium, dark, editorial design system**. 
+ShopEZ is a clean, full-featured online marketplace built using the MERN stack (MongoDB, Express, React, Node) styled with a modern, beginner-friendly **white and blue UI**.
 
-It features two separate user profiles: **Buyers** (who browse catalog items, review products, manage carts, checkout securely, and track purchases) and **Sellers** (who access dashboard analytics, view monthly earning charts, manage order status logs, and create/edit/delete listings).
-
----
-
-## ⚡ Design Philosophy
-
-The UI is custom-designed with a dark aesthetic:
-- **Primary background:** `#0a0a0f` (Deep Black)
-- **Secondary cards:** `#0d1117` / `#111827` (Surface/Glassmorphic)
-- **Primary accent:** `#2563eb` / `#60a5fa` (Neon/Bright Blue glows)
-- **Typography:** Bold `Space Grotesk` headings mixed with clean `Inter` body text and monospaced `JetBrains Mono` values.
-- **Interactions:** Hover glows, staggered fade-in lists, self-drawing SVG checkmark success animations, and interactive cursor-tracking image zooms.
+The platform supports two distinct user profiles: **Buyers** (who browse listings, review products, manage shopping carts, and check out securely) and **Sellers** (who access dashboard analytics, view monthly earning charts, manage order logs, and manage their listings catalog).
 
 ---
 
-## 🛠️ Technology Stack
-- **Frontend:** React.js (Vite), Redux Toolkit, React Router DOM v6, Tailwind CSS, Framer Motion, Recharts, Lucide React, Axios.
-- **Backend:** Node.js, Express.js, Mongoose, Multer (Local Uploads), JWT, bcryptjs, express-validator.
+## ✨ Key Features
+
+### 🛒 Buyer Features
+- **Product Discovery**: Browse all products or filter them dynamically by categories, search keywords, and price ranges.
+- **Cart Management**: Add/remove products and adjust item quantities with live cart total recalculations.
+- **Secure Checkout**: Simple address form validation and order submission with automated stock decrementing.
+- **Order Tracking**: Keep track of previous purchases and view real-time shipping/fulfillment status.
+- **Product Reviews**: Submit ratings (1 to 5 stars) and comments on products.
+
+### 📈 Seller Features
+- **Catalog Manager**: Full CRUD operations to add, view, edit, and delete product listings.
+- **Fulfillment Management**: View orders placed for catalog listings and update shipping logs (Pending ➜ Processing ➜ Shipped ➜ Delivered).
+- **Earnings Analytics**: Visualized revenue charts (using Recharts) and monthly earning analytics.
+- **Product Image Uploads**: Upload product photos seamlessly via local server uploads.
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Tech Stack
+
+- **Frontend**:
+  - **React.js (Vite)**: Clean single-page application builder.
+  - **Redux Toolkit**: Centralized global client state (authentication, shopping cart, products, orders).
+  - **Tailwind CSS**: Modern utility-first CSS styling.
+  - **Recharts**: Responsive chart visualizations for the seller dashboard.
+  - **Lucide React**: Clean SVG line iconography.
+  - **Axios**: HTTP communication layer with automatic token interceptors.
+- **Backend**:
+  - **Node.js & Express.js**: Lightweight RESTful API routing and handling.
+  - **JWT (JSON Web Tokens)**: Secure stateless authentication.
+  - **bcryptjs**: Secure password hashing.
+  - **Multer**: local file upload handling middleware.
+- **Database**:
+  - **MongoDB**: Flexible NoSQL document database.
+  - **Mongoose**: Schemas and ODM utility layer.
+
+---
+
+## 📐 System Architecture
+
+ShopEZ is built on a decoupled **Client-Server Architecture** communicating via JSON REST APIs:
+
+```mermaid
+graph TD
+    A[Vite React Client] <-->|JSON REST APIs / Axios| B[Express NodeJS Backend]
+    B <-->|Mongoose ODM| C[(MongoDB Database)]
+    B -->|Multer Local Storage| D[Local Uploads File Server]
+```
+
+### 1. Presentation Layer (Client)
+- Static client served on port `3000`.
+- Implements SPA routing with **React Router v6** protecting access through buyer/seller route shields.
+- Redux stores auth tokens in memory, automatically attaching them to outbound Axios headers via request interceptors.
+
+### 2. Application Layer (Server)
+- RESTful HTTP server listening on port `5000`.
+- Routes categorized into separate sub-routes (Auth, Products, Orders, Uploads, Sellers).
+- Custom middleware layers handle CORS headers, verify JWT signatures, restrict actions to specific roles, and handle global server errors.
+
+### 3. Data Layer
+- Hosted or local MongoDB storing documents for **Users**, **Products**, **Orders**, and **Reviews**.
+- Enforces data integrity through Mongoose schema constraints (validations, field limits, relational refs).
+
+---
+
+## 📂 Folder Structure
+
+```text
+Smartbridge-E-commerce-platform/
+├── client/                     # Vite React Frontend
+│   ├── src/
+│   │   ├── components/         # Reusable React components
+│   │   │   ├── cart/           # Cart item rows and summaries
+│   │   │   ├── checkout/       # Checkout form widgets
+│   │   │   ├── common/         # Layout essentials (Navbar, Footer, Loader, ProtectedRoute, Toast)
+│   │   │   ├── dashboard/      # Seller analytics (RevenueChart, StatCard, ProductManager, OrderTable)
+│   │   │   └── product/        # Catalog listings (ProductCard, ProductGrid, ReviewCard, StarRating)
+│   │   ├── pages/              # Application views & screen layouts
+│   │   ├── redux/              # Redux slices and store setup
+│   │   ├── services/           # Axios configuration & request interceptors
+│   │   └── styles/             # Global CSS variables & styling (globals.css)
+│   ├── tailwind.config.js      # Custom theme color & shadow extends
+│   └── vite.config.js          # Client dev port (3000) & proxy routing config
+│
+├── server/                     # Express Node.js Backend
+│   ├── config/                 # Database connection setup (db.js)
+│   ├── controllers/            # Controller handlers mapping core logic
+│   ├── middleware/             # Middleware controllers (auth, error validation)
+│   ├── models/                 # Mongoose schema definitions
+│   ├── routes/                 # Express API endpoint controllers
+│   ├── utils/                  # Utility helpers (generate JWTs)
+│   ├── uploads/                # Local uploaded asset storage
+│   └── seeder.js               # Sample database seeding script
+│
+├── .env                        # Environment configurations
+├── package.json                # Project script registry
+└── README.md                   # Project documentation
+```
+
+---
+
+## 🔒 Environmental Variables
+
+The backend loads configuration variables from a `.env` file situated in the root directory:
+
+| Variable | Description | Default Value |
+| :--- | :--- | :--- |
+| `PORT` | Local network port the Express server listens on | `5000` |
+| `NODE_ENV` | Running node environment state | `development` |
+| `MONGO_URI` | MongoDB Atlas or local connection string | `mongodb://127.0.0.1:27017/shopez` |
+| `JWT_SECRET` | Secret hash key used to sign authorization tokens | `supersecretjwttokendesignshopez` |
+| `JWT_EXPIRES_IN` | Validity period of signed JWT tokens | `7d` |
+| `CLIENT_URL` | Cross-Origin resource URL address of the client | `http://localhost:3000` |
+
+---
+
+## 🚀 Installation and Setup
 
 ### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) (version 18+) installed on your machine. You will also need a running [MongoDB](https://www.mongodb.com/try/download/community) instance locally (or an Atlas connection string).
+- [Node.js](https://nodejs.org/) installed (version 18+ recommended).
+- A running MongoDB instance locally or a MongoDB Atlas credentials connection.
 
-### 1. Installation
-Run the root script to install dependencies for the root, backend server, and frontend client folders simultaneously:
+### Step 1: Install Dependencies
+Run the root setup command to install server and client modules concurrently:
 ```bash
 npm run install-all
 ```
 
-### 2. Seeding the Database
-ShopEZ includes a seeder script that populates your database with ready-to-use sample buyer/seller profiles and premium tech listings. To run it:
+### Step 2: Seed Sample Database
+Populate your MongoDB database with pre-configured buyer/seller accounts and listing items:
 ```bash
 npm run seed
 ```
 
-Once completed, you can log in immediately using these credentials:
-- **Seller Account:** `seller@shopez.com` (Password: `password123`)
-- **Buyer Account:** `buyer@shopez.com` (Password: `password123`)
+Once seeding finishes successfully, log in instantly using these credentials:
+- **Seller Account**: `seller@shopez.com` (Password: `password123`)
+- **Buyer Account**: `buyer@shopez.com` (Password: `password123`)
 
-### 3. Running the Application
-Launch both the Express backend (`http://localhost:5000`) and the Vite React frontend (`http://localhost:3000`) concurrently from the root directory:
+### Step 3: Run the Application
+Launch both the Express backend and the Vite React frontend concurrently from the root directory:
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:3000` in your web browser to start shopping!
+Open your browser to `http://localhost:3000` to browse and purchase items!
 
 ---
 
-## 📂 Project Architecture
+## ✍️ Author & License
 
-```text
-shopez/
-├── client/                     # Vite React Frontend
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── common/         # Navbar, Footer, Loader, ProtectedRoute, SkeletonCard, Toast
-│   │   │   ├── product/        # ProductCard, ProductGrid, ReviewCard, StarRating, ImageGallery
-│   │   │   ├── cart/           # CartItem, CartSummary
-│   │   │   ├── checkout/       # AddressForm
-│   │   │   └── dashboard/      # StatCard, RevenueChart, OrderTable, ProductManager, SidebarNav
-│   │   ├── pages/              # Home, ProductListing, ProductDetail, Cart, Checkout, OrderConfirmation, Login, Register, SellerDashboard, Orders
-│   │   ├── redux/              # store.js & Slices (auth, product, cart, order)
-│   │   ├── services/           # Axios interceptors (axiosInstance.js)
-│   │   └── styles/             # Global CSS scrollbars, glows, skeletons (globals.css)
-│   ├── tailwind.config.js      # Color extends mapping (#0a0a0f, #2563eb, etc.)
-│   └── vite.config.js          # Port 3000 configuration & backend proxy redirects
-│
-├── server/                     # Express Node.js Backend
-│   ├── config/                 # db.js connection establishment
-│   ├── controllers/            # auth, products, orders, and dashboard analytics handlers
-│   ├── middleware/             # route protections, role limits, error handlings
-│   ├── models/                 # Mongoose schemas (User, Product, Order, Review)
-│   ├── routes/                 # Express API endpoints mapping
-│   ├── utils/                  # token signing helpers (generateToken.js)
-│   └── seeder.js               # Clean db seeding scripts
-└── package.json                # Root package concurrently script mappings
-```
-
----
-
-## 🔒 API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - Create a new user (buyer/seller role).
-- `POST /api/auth/login` - Authenticate and get a JWT token.
-
-### Products Catalog
-- `GET /api/products` - Retrieve list of products with filters (`search`, `category`, `minPrice`, `maxPrice`, `sort`, `page`).
-- `GET /api/products/:id` - Fetch single product specs and customer reviews.
-- `POST /api/products` - Create product (Sellers only).
-- `PUT /api/products/:id` - Edit product specs (Sellers only, ownership checked).
-- `DELETE /api/products/:id` - Remove product from database (Sellers only, ownership checked).
-
-### Product Reviews
-- `POST /api/products/:id/reviews` - Add a rating (1-5) and feedback comment (Buyers only).
-- `GET /api/products/:id/reviews` - Fetch reviews list for a product.
-
-### Order Tracking
-- `POST /api/orders` - Place purchase order, checks and decrements product stock (Buyers only).
-- `GET /api/orders/my` - Fetch purchase order history list (Buyers only).
-- `GET /api/orders/:id` - Fetch order invoice and status tracking specs (Buyers/Sellers only).
-
-### Seller Dashboard Operations
-- `GET /api/seller/products` - Fetch listed products by the logged-in seller.
-- `GET /api/seller/orders` - Fetch buyer orders containing the seller's listings.
-- `PUT /api/seller/orders/:id/status` - Update dispatch status (`pending`, `processing`, `shipped`, `delivered`).
-- `GET /api/seller/analytics` - Fetch dashboard analytics (revenues, orders, total products, average ratings, and monthly performance coordinates).
-
-### File Uploads
-- `POST /api/upload` - Upload product photos statically via Multer (stored in `server/uploads/`).
+- **Author**: [pavan05-sai](https://github.com/pavan05-sai)
+- **License**: This project is intended strictly for **learning/educational purposes**. Feel free to use, modify, and distribute it for educational use.

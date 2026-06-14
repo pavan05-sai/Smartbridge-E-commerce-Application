@@ -36,31 +36,31 @@ export default function Toast() {
     switch (toast.type) {
       case 'success':
         return {
-          bg: 'rgba(16, 185, 129, 0.1)',
-          border: 'border-success',
-          text: 'text-success',
-          icon: <CheckCircle2 className="h-5 w-5 text-success" />,
+          bg: '#f0fdf4',
+          border: 'border-green-200',
+          text: 'text-green-800',
+          icon: <CheckCircle2 className="h-5 w-5 text-green-600" />,
         };
       case 'error':
         return {
-          bg: 'rgba(239, 68, 68, 0.1)',
-          border: 'border-error',
-          text: 'text-error',
-          icon: <AlertCircle className="h-5 w-5 text-error" />,
+          bg: '#fef2f2',
+          border: 'border-red-200',
+          text: 'text-red-800',
+          icon: <AlertCircle className="h-5 w-5 text-red-600" />,
         };
       case 'warning':
         return {
-          bg: 'rgba(245, 158, 11, 0.1)',
-          border: 'border-warning',
-          text: 'text-warning',
-          icon: <AlertCircle className="h-5 w-5 text-warning" />,
+          bg: '#fffbeb',
+          border: 'border-amber-200',
+          text: 'text-amber-800',
+          icon: <AlertCircle className="h-5 w-5 text-amber-600" />,
         };
       default:
         return {
-          bg: 'rgba(37, 99, 235, 0.1)',
-          border: 'border-accent-blue',
-          text: 'text-accent-electric',
-          icon: <Info className="h-5 w-5 text-accent-electric" />,
+          bg: '#eff6ff',
+          border: 'border-blue-200',
+          text: 'text-blue-800',
+          icon: <Info className="h-5 w-5 text-blue-600" />,
         };
     }
   };
@@ -70,11 +70,11 @@ export default function Toast() {
   return (
     <div className="fixed bottom-6 right-6 z-50 animate-slide-in max-w-sm">
       <div
-        className={`flex items-center gap-3 px-4 py-3 rounded-lg border ${style.border} card-glass shadow-lg`}
+        className={`flex items-center gap-3 px-4 py-3 rounded-lg border ${style.border} shadow-lg`}
         style={{ backgroundColor: style.bg }}
       >
         {style.icon}
-        <p className="text-sm font-medium text-text-primary pr-4">{toast.message}</p>
+        <p className={`text-sm font-medium pr-4 ${style.text}`}>{toast.message}</p>
         <button
           onClick={() => setToast(null)}
           className="ml-auto text-text-secondary hover:text-text-primary transition-colors duration-150"

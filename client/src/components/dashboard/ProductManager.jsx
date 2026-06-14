@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Plus, Edit, Trash2, X, Upload, Loader2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import axiosInstance from '../../services/axiosInstance';
 import { showToast } from '../common/Toast';
 
@@ -229,198 +228,189 @@ export default function ProductManager({ products = [], onRefresh }) {
       </div>
 
       {/* Slide-In Side Drawer Form */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Drawer Backdrop Overlay */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              onClick={closeDrawer}
-              className="fixed inset-0 bg-background-primary z-45"
-            ></motion.div>
+      {isOpen && (
+        <>
+          {/* Drawer Backdrop Overlay */}
+          <div
+            onClick={closeDrawer}
+            className="fixed inset-0 bg-black/40 z-45"
+          ></div>
 
-            {/* Slide-In content container */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              className="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-surface border-l border-borderBlue shadow-2xl flex flex-col"
-            >
-              {/* Drawer Header */}
-              <div className="p-6 border-b border-borderBlue/50 flex justify-between items-center bg-background-secondary">
-                <h3 className="text-lg font-bold font-heading text-text-primary">
-                  {editingProduct ? 'Edit Product' : 'Add New Product'}
-                </h3>
-                <button
-                  onClick={closeDrawer}
-                  className="text-text-secondary hover:text-text-primary transition-colors focus:outline-none"
-                >
-                  <X size={20} />
-                </button>
+          {/* Slide-In content container */}
+          <div
+            className="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-surface border-l border-borderBlue shadow-2xl flex flex-col"
+          >
+            {/* Drawer Header */}
+            <div className="p-6 border-b border-borderBlue/50 flex justify-between items-center bg-background-secondary">
+              <h3 className="text-lg font-bold font-heading text-text-primary">
+                {editingProduct ? 'Edit Product' : 'Add New Product'}
+              </h3>
+              <button
+                onClick={closeDrawer}
+                className="text-text-secondary hover:text-text-primary transition-colors focus:outline-none"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Drawer Form Body */}
+            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
+              {/* Title */}
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                  Product Title *
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  required
+                  value={formData.title}
+                  onChange={handleChange}
+                  placeholder="e.g. Mechanical Gaming Keyboard"
+                  className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright focus:shadow-glow transition-all"
+                />
               </div>
 
-              {/* Drawer Form Body */}
-              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
-                {/* Title */}
+              {/* Description */}
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                  Description *
+                </label>
+                <textarea
+                  name="description"
+                  required
+                  rows={3}
+                  value={formData.description}
+                  onChange={handleChange}
+                  placeholder="Provide details about specs, color, warranty..."
+                  className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright focus:shadow-glow transition-all"
+                ></textarea>
+              </div>
+
+              {/* Price & Discount */}
+              <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                    Product Title *
+                    Base Price (₹) *
                   </label>
                   <input
-                    type="text"
-                    name="title"
+                    type="number"
+                    name="price"
                     required
-                    value={formData.title}
+                    min="0"
+                    step="0.01"
+                    value={formData.price}
                     onChange={handleChange}
-                    placeholder="e.g. Mechanical Gaming Keyboard"
-                    className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright focus:shadow-glow transition-all"
+                    placeholder="999"
+                    className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright font-accent"
                   />
                 </div>
 
-                {/* Description */}
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                    Description *
+                    Discount (%)
                   </label>
-                  <textarea
-                    name="description"
-                    required
-                    rows={3}
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Provide details about specs, color, warranty..."
-                    className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright focus:shadow-glow transition-all"
-                  ></textarea>
-                </div>
-
-                {/* Price & Discount */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                      Base Price (₹) *
-                    </label>
-                    <input
-                      type="number"
-                      name="price"
-                      required
-                      min="0"
-                      step="0.01"
-                      value={formData.price}
-                      onChange={handleChange}
-                      placeholder="999"
-                      className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright font-accent"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                      Discount (%)
-                    </label>
-                    <input
-                      type="number"
-                      name="discount"
-                      min="0"
-                      max="100"
-                      value={formData.discount}
-                      onChange={handleChange}
-                      placeholder="10"
-                      className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright font-accent"
-                    />
-                  </div>
-                </div>
-
-                {/* Category & Stock */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                      Category *
-                    </label>
-                    <select
-                      name="category"
-                      value={formData.category}
-                      onChange={handleChange}
-                      className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright cursor-pointer"
-                    >
-                      {CATEGORIES.map((cat) => (
-                        <option key={cat} value={cat}>
-                          {cat}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                      Stock Quantity *
-                    </label>
-                    <input
-                      type="number"
-                      name="stock"
-                      required
-                      min="0"
-                      value={formData.stock}
-                      onChange={handleChange}
-                      placeholder="25"
-                      className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright font-accent"
-                    />
-                  </div>
-                </div>
-
-                {/* Upload Image Section */}
-                <div className="flex flex-col gap-1 border-t border-borderBlue/30 pt-4">
-                  <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
-                    Product Photo
-                  </label>
-                  <div className="flex gap-3 items-center">
-                    <label className="flex items-center gap-2 px-3 py-2 bg-surface hover:bg-borderBlue/20 border border-borderBlue rounded-lg text-xs font-medium cursor-pointer text-text-secondary hover:text-text-primary transition-all">
-                      {uploading ? (
-                        <Loader2 size={14} className="animate-spin text-accent-electric" />
-                      ) : (
-                        <Upload size={14} className="text-accent-electric" />
-                      )}
-                      {uploading ? 'Uploading...' : 'Upload Image'}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileUpload}
-                        className="hidden"
-                        disabled={uploading}
-                      />
-                    </label>
-                    <span className="text-[10px] text-text-secondary">or paste URL below</span>
-                  </div>
-                  
                   <input
-                    type="url"
-                    name="imageUrl"
-                    value={formData.imageUrl}
+                    type="number"
+                    name="discount"
+                    min="0"
+                    max="100"
+                    value={formData.discount}
                     onChange={handleChange}
-                    placeholder="https://example.com/image.jpg"
-                    className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-xs text-text-primary focus:outline-none focus:border-accent-bright transition-all"
+                    placeholder="10"
+                    className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright font-accent"
                   />
-                  {formData.imageUrl && (
-                    <div className="mt-2 h-24 w-24 rounded border border-borderBlue overflow-hidden">
-                      <img src={formData.imageUrl} alt="preview" className="h-full w-full object-cover" />
-                    </div>
-                  )}
+                </div>
+              </div>
+
+              {/* Category & Stock */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                    Category *
+                  </label>
+                  <select
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright cursor-pointer"
+                  >
+                    {CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
-                {/* Submit button */}
-                <button
-                  type="submit"
-                  disabled={uploading}
-                  className="w-full py-2.5 bg-accent-blue hover:bg-accent-bright text-white font-medium rounded-lg text-sm transition-all hover:shadow-glow btn-press mt-6"
-                >
-                  {editingProduct ? 'Update Product' : 'Add Product'}
-                </button>
-              </form>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                    Stock Quantity *
+                  </label>
+                  <input
+                    type="number"
+                    name="stock"
+                    required
+                    min="0"
+                    value={formData.stock}
+                    onChange={handleChange}
+                    placeholder="25"
+                    className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-bright font-accent"
+                  />
+                </div>
+              </div>
+
+              {/* Upload Image Section */}
+              <div className="flex flex-col gap-1 border-t border-borderBlue/30 pt-4">
+                <label className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                  Product Photo
+                </label>
+                <div className="flex gap-3 items-center">
+                  <label className="flex items-center gap-2 px-3 py-2 bg-surface hover:bg-borderBlue/20 border border-borderBlue rounded-lg text-xs font-medium cursor-pointer text-text-secondary hover:text-text-primary transition-all">
+                    {uploading ? (
+                      <Loader2 size={14} className="animate-spin text-accent-electric" />
+                    ) : (
+                      <Upload size={14} className="text-accent-electric" />
+                    )}
+                    {uploading ? 'Uploading...' : 'Upload Image'}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      disabled={uploading}
+                    />
+                  </label>
+                  <span className="text-[10px] text-text-secondary">or paste URL below</span>
+                </div>
+                
+                <input
+                  type="url"
+                  name="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  placeholder="https://example.com/image.jpg"
+                  className="bg-background-primary border border-borderBlue rounded-lg px-3 py-2 text-xs text-text-primary focus:outline-none focus:border-accent-bright transition-all"
+                />
+                {formData.imageUrl && (
+                  <div className="mt-2 h-24 w-24 rounded border border-borderBlue overflow-hidden">
+                    <img src={formData.imageUrl} alt="preview" className="h-full w-full object-cover" />
+                  </div>
+                )}
+              </div>
+
+              {/* Submit button */}
+              <button
+                type="submit"
+                disabled={uploading}
+                className="w-full py-2.5 bg-accent-blue hover:bg-accent-bright text-white font-medium rounded-lg text-sm transition-all hover:shadow-glow btn-press mt-6"
+              >
+                {editingProduct ? 'Update Product' : 'Add Product'}
+              </button>
+            </form>
+          </div>
+        </>
+      )}
     </div>
   );
 }

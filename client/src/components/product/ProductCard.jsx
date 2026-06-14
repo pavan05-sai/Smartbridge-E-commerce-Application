@@ -87,9 +87,9 @@ export default function ProductCard({ product }) {
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0}
-          className={`mt-2.5 w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-xs font-medium border border-borderBlue bg-surface hover:bg-accent-blue/10 hover:border-accent-blue/80 text-text-primary transition-all duration-200 btn-press disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`mt-2.5 w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg text-xs font-medium bg-accent-blue hover:bg-accent-bright text-white transition-all duration-200 btn-press disabled:opacity-50 disabled:cursor-not-allowed`}
         >
-          <ShoppingCart size={14} className="text-accent-electric" />
+          <ShoppingCart size={14} />
           Add to Cart
         </button>
       </div>

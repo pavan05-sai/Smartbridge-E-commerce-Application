@@ -8,32 +8,32 @@ export default {
     extend: {
       colors: {
         background: {
-          primary: '#0a0a0f', // deep black
-          secondary: '#0d1117', // card/section bg
+          primary: '#ffffff', // plain white background
+          secondary: '#f1f5f9', // light gray background / card bg
         },
         accent: {
-          blue: '#2563eb', // primary CTA
-          bright: '#3b82f6', // hover, links
-          electric: '#60a5fa', // glow, badges
+          blue: '#2563eb', // primary blue color
+          bright: '#1d4ed8', // slightly darker blue for hover
+          electric: '#2563eb', // badge / electric accent
         },
-        surface: '#111827', // navbar, modals
-        borderBlue: '#1e3a5f', // subtle blue-tinted borders
+        surface: '#ffffff', // navbar, modals
+        borderBlue: '#e2e8f0', // subtle light gray borders
         text: {
-          primary: '#f1f5f9', // main text
-          secondary: '#94a3b8', // muted text
+          primary: '#111827', // main dark text
+          secondary: '#4b5563', // muted gray text
         },
-        success: '#10b981',
-        error: '#ef4444',
-        warning: '#f59e0b',
+        success: '#16a34a',
+        error: '#dc2626',
+        warning: '#d97706',
       },
       fontFamily: {
-        heading: ['"Space Grotesk"', '"Syne"', 'sans-serif'],
+        heading: ['"Inter"', 'sans-serif'],
         body: ['"Inter"', 'sans-serif'],
         accent: ['"JetBrains Mono"', 'monospace'],
       },
       boxShadow: {
-        glow: '0 0 20px rgba(37,99,235,0.3)',
-        'glow-electric': '0 0 25px rgba(96,165,250,0.4)',
+        glow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+        'glow-electric': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
       },
     },
   },

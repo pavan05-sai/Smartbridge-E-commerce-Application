@@ -4,7 +4,7 @@ import { Github, Twitter, Instagram, Globe } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#0d1117] border-t border-borderBlue mt-auto">
+    <footer className="w-full bg-background-secondary border-t border-borderBlue mt-auto">
       {/* Decorative Gradient Bar */}
       <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-accent-blue to-transparent"></div>
 

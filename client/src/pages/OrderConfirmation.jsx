@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrderDetails } from '../redux/slices/orderSlice';
-import { motion } from 'framer-motion';
 import { ShoppingBag, ChevronRight, Check } from 'lucide-react';
 
 export default function OrderConfirmation() {
@@ -13,30 +12,6 @@ export default function OrderConfirmation() {
   useEffect(() => {
     dispatch(fetchOrderDetails(id));
   }, [dispatch, id]);
-
-  const drawCheckmark = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { delay: 0.2, type: 'spring', duration: 0.8, bounce: 0 },
-        opacity: { delay: 0.2, duration: 0.01 }
-      }
-    }
-  };
-
-  const drawCircle = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { type: 'spring', duration: 0.8, bounce: 0 },
-        opacity: { duration: 0.01 }
-      }
-    }
-  };
 
   if (loading && !currentOrder) {
     return (
@@ -52,7 +27,7 @@ export default function OrderConfirmation() {
     <div className="min-h-screen bg-background-primary px-4 sm:px-6 md:px-8 py-16 flex items-center justify-center">
       <div className="max-w-xl w-full text-center space-y-8">
         
-        {/* Animated Checkmark Drawer */}
+        {/* Checkmark Drawer */}
         <div className="flex justify-center">
           <div className="relative h-20 w-20 flex items-center justify-center">
             {/* Pulsating green outer shadow */}
@@ -64,20 +39,14 @@ export default function OrderConfirmation() {
               viewBox="0 0 80 80"
               className="text-success fill-transparent stroke-success stroke-[4px]"
             >
-              <motion.circle
+              <circle
                 cx="40"
                 cy="40"
                 r="36"
-                variants={drawCircle}
-                initial="hidden"
-                animate="visible"
                 strokeLinecap="round"
               />
-              <motion.path
+              <path
                 d="M25 40 L35 50 L55 30"
-                variants={drawCheckmark}
-                initial="hidden"
-                animate="visible"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
